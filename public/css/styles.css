@@ -1,6 +1,258 @@
-/******* Change Box Model ***************/
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
+/* General styles */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f8f9fa;
+}
+
+#wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header styles */
+header {
+  background-color: #f8f9fa;
+  color: #212529;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.siteName a {
+  color: #212529;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+#tools a {
+  color: #212529;
+  text-decoration: none;
+}
+
+/* Navigation styles */
+nav {
+  background-color: #343a40;
+  color: white;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-around;
+}
+
+nav li {
+  padding: 10px;
+  text-align: center;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+  display: block;
+  width: 100%;
+}
+
+/* Main content styles */
+main {
+  padding: 20px 0;
+}
+
+/* Car section styles */
+.intro h2 {
+  text-align: left;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.car-highlight {
+  position: relative;
+  display: flex;
+  align-items: center;
+  left: 18%;
+}
+
+.car-highlight img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Details section styles */
+.details {
+  position: absolute;
+  top: 42%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #00bfff;
+}
+
+.details h3 {
+  font-size: 1.2rem;
+  color: #00bfff;
+  margin-bottom: -25px;
+  margin-top: -15px;
+}
+
+.details ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: -3px;
+}
+
+.details ul li {
+  font-size: 0.9rem;
+  margin-bottom: -5px;
+}
+
+.details button {
+  background-color: #00bfff;
+  color: black;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 3px 10px;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+/* Reviews section styles */
+.reviews ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+/* Upgrades section styles */
+.upgrades h3 {
+  text-align: left;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.upgrades .grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  justify-items: left;
+}
+
+.upgrades .grid div {
+  text-align: center;
+}
+
+.upgrades .grid div .image-container {
+  background-color: #00bfff;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.5px solid black;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+.upgrades .grid div img {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+}
+
+.upgrades .grid div a {
+  display: block;
+  margin-top: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: blue;
+  text-decoration: underline;
+}
+
+/* Footer styles */
+footer {
+  color: #333;
+  text-align: left;
+  margin-top: 2rem;
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+  body {
+    background-image: url('/images/site/small_check.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
+  #wrapper {
+    background-color: white;
+    border: 5px solid #00bfff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .intro {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .car-highlight {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .details {
+    top: 50%;
+    left: 25%;
+  }
+
+  .details h3 {
+    font-size: 30px;
+  }
+
+  .details ul li {
+    font-size: 18px;
+  }
+
+  .details button {
+    padding: 10px 20px;
+    margin-top: 20px;
+  }
+
+  .content_review_upgrades {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+
+  .reviews {
+    order: 1;
+    text-align: left;
+  }
+
+  .upgrades {
+    order: 0;
+    text-align: left;
+  }
+
+  .upgrades .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
 }
