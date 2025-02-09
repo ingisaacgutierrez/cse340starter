@@ -1,16 +1,20 @@
-<% if (title) { %>
-    <h1><%= title %></h1>
-<% } else { %>
-    <h1>Vehicle Details</h1>
-<% } %>
-
 <% if (vehicle) { %>
-    <h1><%= vehicle.inv_make %> <%= vehicle.inv_model %> - <%= vehicle.inv_year %></h1>
-    <img src="<%= vehicle.inv_image %>" alt="<%= vehicle.inv_make %> <%= vehicle.inv_model %>">
-    <p><strong>Price:</strong> $<%= vehicle.inv_price %></p>
-    <p><strong>Miles:</strong> <%= vehicle.inv_miles %> miles</p>
-    <p><strong>Color:</strong> <%= vehicle.inv_color %></p>
-    <p><strong>Description:</strong> <%= vehicle.inv_description %></p>
+    <div class="vehicle-detail">
+        <!-- Left Column: Title and Image -->
+        <div>
+            <h1><%= vehicle.inv_make %> <%= vehicle.inv_model %> - <%= vehicle.inv_year %></h1>
+            <img src="<%= vehicle.inv_image %>" alt="<%= vehicle.inv_make %> <%= vehicle.inv_model %>">
+        </div>
+
+        <!-- Right Column: Details -->
+        <div class="vehicle-info">
+            <p><strong>Description:</strong> <%= vehicle.inv_description %></p>
+            <p><strong>Miles:</strong> <%= vehicle.inv_miles %> miles</p>
+            <p><strong>Color:</strong> <%= vehicle.inv_color %></p>
+            <p class="price"><strong>Price:</strong> $<%= vehicle.inv_price %></p>
+        </div>
+    </div>
 <% } else { %>
     <p>No details available</p>
 <% } %>
+

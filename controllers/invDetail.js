@@ -10,10 +10,10 @@ invDetailCont.getVehicleDetail = async function (req, res, next) {
     try {
         const vehicleId = req.params.vehicleId;
         const vehicle = await invModel.getVehicleById(vehicleId);
-        const nav = await utilities.getNav(); // Genera la navegación
+        const nav = await utilities.getNav();
 
         if (!vehicle) {
-            return res.status(404).send("Vehículo no encontrado");
+            return res.status(404).send("Vechile not found");
         }
 
         res.render("./inventory/detail", {
@@ -22,7 +22,7 @@ invDetailCont.getVehicleDetail = async function (req, res, next) {
             vehicle,
         });
     } catch (error) {
-        console.error("Error obteniendo detalles del vehículo:", error);
+        console.error("Error al obtener detalles del vehículo:", error);
         res.status(500).send("Error en el servidor");
     }
 };

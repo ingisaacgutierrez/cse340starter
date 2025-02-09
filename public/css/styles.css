@@ -185,6 +185,98 @@ footer {
   margin-top: 2rem;
 }
 
+/*************************** Styles for the classification page ****************************/
+.classification-page h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Grid container */
+#inv-display {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 300px;
+}
+
+/* Styles for each grid item */
+#inv-display li {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+#inv-display li:hover {
+  transform: scale(1.05);
+}
+
+/* Styles for the title */
+#inv-display h2 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Vehicle image */
+#inv-display img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Styles for the price */
+.namePrice span {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #00bfff;
+  display: block;
+  margin-top: 10px;
+}
+
+/**************************** Styles for the vehicle detail page ****************************/
+.vehicle-detail {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  max-width: 90%; 
+  margin: 0 auto; 
+  text-align: center; 
+}
+
+.vehicle-info {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 5px;
+}
+
+.vehicle-info .price {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  color: #008000; 
+  text-shadow: 2px 2px 5px rgba(0, 128, 0, 0.5);
+}
+
+/**************************** Styles for the error page ****************************/
+
+.trigger-error img {
+  width: 100%;  
+  max-width: 100%;  
+  height: auto;  
+  display: block;  
+  margin: 0 auto; 
+}
+
 /* Desktop styles */
 @media (min-width: 1024px) {
   body {
@@ -255,4 +347,29 @@ footer {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
+
+  /*************************** Styles for the classification page ****************************/
+  #inv-display {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    max-width: 1200px;
+  }
+
+  /**************************** Styles for detail view ****************************/
+  .vehicle-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 1200px;
+    align-items: start;
+  }
+
+  .vehicle-info {
+    margin-top: 90px;
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .vehicle-info .price {
+    text-align: right;
+  }
+
 }

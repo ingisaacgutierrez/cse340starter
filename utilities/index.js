@@ -58,9 +58,7 @@ Util.buildClassificationGrid = async function(data){
         return grid
 }
 
-/* **************************************
-* Build the Detail view HTML
-* ************************************ */
+
 /* **************************************
 * Build the Detail view HTML
 * ************************************ */
