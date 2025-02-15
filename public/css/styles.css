@@ -345,7 +345,44 @@ p a:hover {
 }
 
 
+/****************************** Register styles *******************************/
+.register-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
+.register-form label {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.register-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.register-form button {
+  background-color: #007bff;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register-form button:hover {
+  background-color: #0056b3;
+}
 
 
 
@@ -471,4 +508,25 @@ p a:hover {
     font-size: 1.1rem;
   }
 
+
+/**************************** Register view ****************************/
+  .register-form {
+    max-width: 600px;
+    padding: 30px;
+    gap: 16px;
+  }
+
+  .register-form label {
+    font-size: 1.2rem;
+  }
+
+  .register-form input {
+    padding: 14px;
+    font-size: 1.2rem;
+  }
+
+  .register-form button {
+    padding: 14px;
+    font-size: 1.2rem;
+  }
 }

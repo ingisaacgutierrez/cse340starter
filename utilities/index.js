@@ -105,6 +105,34 @@ Util.buildLoginForm = function () {
     `;
 };
 
+
+/* **************************************
+* Build the Registration view HTML
+* ************************************ */
+Util.getRegisterForm = function (){
+    return `
+        <form action="/account/register" method="POST" class="register-form">
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" required>
+
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" required>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required minlength="12" 
+                    pattern="(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{12,}" 
+                    title="Must contain at least one number, one uppercase letter, one special character, and be at least 12 characters long">
+
+            <button type="submit">Register</button>
+        </form>
+    `;
+};
+
+
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
