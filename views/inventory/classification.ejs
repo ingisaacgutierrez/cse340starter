@@ -1,11 +1,8 @@
 <% if (title) { %>
-    <h1><%= title %></h1>
-    <% } else {
-        res.redirect('/')
+    <h1 class="classification-title"><%= title %></h1>
+<% } else {
+    res.redirect('/')
 } %>
-<body class="classification-page">
-
 
 <%# messages() %>
-
 <%- grid %>

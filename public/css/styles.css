@@ -186,7 +186,7 @@ footer {
 }
 
 /*************************** Styles for the classification page ****************************/
-.classification-page h1 {
+.classification-title h1 {
   text-align: center;
   font-size: 2rem;
   margin-bottom: 20px;
@@ -349,6 +349,7 @@ footer {
   }
 
   /*************************** Styles for the classification page ****************************/
+  
   #inv-display {
     grid-template-columns: repeat(3, 1fr); /* 3 columns */
     max-width: 1200px;
