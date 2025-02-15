@@ -62,21 +62,48 @@ Util.buildClassificationGrid = async function(data){
 /* **************************************
 * Build the Detail view HTML
 * ************************************ */
-Util.buildDetailView = async function (vehicle) {
-    let detailHTML = `
+Util.buildVehicleDetail = function (vehicle) {
+    if (!vehicle) {
+        return `<p>No details available</p>`;
+    }
+
+    return `
         <div class="vehicle-detail">
-            <h1>${vehicle.inv_make} ${vehicle.inv_model} (${vehicle.inv_year})</h1>
-            <img src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}">
-            <p><strong>Price:</strong> $${new Intl.NumberFormat('en-US').format(vehicle.inv_price)}</p>
-            <p><strong>Mileage:</strong> ${vehicle.inv_miles} miles</p>
-            <p><strong>Color:</strong> ${vehicle.inv_color}</p>
-            <p>${vehicle.inv_description}</p>
+            <!-- Left Column: Title and Image -->
+            <div>
+                <h1>${vehicle.inv_make} ${vehicle.inv_model} - ${vehicle.inv_year}</h1>
+                <img src="${vehicle.inv_image}" alt="${vehicle.inv_make} ${vehicle.inv_model}">
+            </div>
+
+            <!-- Right Column: Details -->
+            <div class="vehicle-info">
+                <p><strong>Description:</strong> ${vehicle.inv_description}</p>
+                <p><strong>Miles:</strong> ${vehicle.inv_miles} miles</p>
+                <p><strong>Color:</strong> ${vehicle.inv_color}</p>
+                <p class="price"><strong>Price:</strong> $${vehicle.inv_price}</p>
+            </div>
         </div>
     `;
-    return detailHTML;
 };
 
+/* **************************************
+* Build the Login view HTML
+* ************************************ */
+Util.buildLoginForm = function () {
+    return `
+        <form id="login-form" action="/account/login" method="POST">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
 
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p>No account? <a href="/account/register">Sign up</a></p>
+    `;
+};
 
 /* ****************************************
  * Middleware For Handling Errors

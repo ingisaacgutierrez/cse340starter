@@ -16,6 +16,7 @@ const static = require("./routes/static");
 const inventoryRoute = require("./routes/inventoryRoute");
 const utilities = require("./utilities/index");
 const errorRoute = require("./routes/errorRoute");
+const accountRoute = require('./routes/accountRoute');
 
 
 
@@ -50,6 +51,9 @@ app.use(function(req, res, next){
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
+
+//Account route
+app.use('/account', accountRoute);
 
 //index route
 app.get("/", utilities.handleErrors(baseController.buildHome))

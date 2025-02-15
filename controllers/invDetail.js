@@ -11,15 +11,16 @@ invDetailCont.getVehicleDetail = async function (req, res, next) {
         const vehicleId = req.params.vehicleId;
         const vehicle = await invModel.getVehicleById(vehicleId);
         const nav = await utilities.getNav();
+        const vehicleDetail = utilities.buildVehicleDetail(vehicle); 
 
         if (!vehicle) {
-            return res.status(404).send("Vechile not found");
+            return res.status(404).send("Vehicle not found");
         }
 
         res.render("./inventory/detail", {
-            title: `${vehicle.inv_make} ${vehicle.inv_model}`,
+            title: "",
             nav,
-            vehicle,
+            vehicleDetail, 
         });
     } catch (error) {
         console.error("Error al obtener detalles del vehículo:", error);
