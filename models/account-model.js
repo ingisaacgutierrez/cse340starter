@@ -1,4 +1,4 @@
-const pool = require("../database");
+const pool = require("../database/");
 
 /* *****************************
 *   Register new account
@@ -6,18 +6,19 @@ const pool = require("../database");
 async function registerAccount(account_firstname, account_lastname, account_email, account_password) {
     try {
         const sql = `
-        INSERT INTO account 
-        (account_firstname, account_lastname, account_email, account_password, account_type) 
-        VALUES ($1, $2, $3, $4, 'Client') 
-        RETURNING *`;
-        
+            INSERT INTO account 
+            (account_firstname, account_lastname, account_email, account_password, account_type) 
+            VALUES ($1, $2, $3, $4, 'Client') 
+            RETURNING *;
+        `;
+
         const result = await pool.query(sql, [account_firstname, account_lastname, account_email, account_password]);
-        return result.rows[0]; 
+
+        return result;
     } catch (error) {
-        console.error("Database Error:", error.message); 
-        return error.message;
+        console.error("Error en la consulta SQL:", error);
+        return null; 
     }
 }
-
 
 module.exports = { registerAccount };

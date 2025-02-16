@@ -9,9 +9,9 @@ router.get('/login', utilities.handleErrors(accountController.buildLogin));
 // GET route for registration page
 router.get("/register", utilities.handleErrors(accountController.buildRegister));
 
-// GET route for registration function
-router.post('/register', utilities.handleErrors(accountController.registerAccount))
-
+// POST route for registration function
+router.post('/register', utilities.handleErrors(accountController.registerAccount));
 
 module.exports = router;
+
 

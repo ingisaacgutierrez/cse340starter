@@ -1,6 +1,24 @@
-<% if (title) { %>
-    <h1><%= title %></h1>
-<% } %>
+<main id="account-register-page">
+    <% if (title) { %>
+        <h1><%= title %></h1>
+    <% } %>
 
-<%- registerForm %>
+    <% if (messages && messages.length > 0) { %>
+        <div class="alert alert-warning">
+            <%= messages %>
+        </div>
+    <% } %>
 
+    <%- registerForm %>
+</main>
+
+<script>
+    // Waits 5 seconds and makes alerts fade out
+    setTimeout(() => {
+        const alerts = document.querySelectorAll(".alert");
+        alerts.forEach(alert => {
+            alert.classList.add("fade-out");
+            setTimeout(() => alert.remove(), 1000); // Removes element after animation
+        });
+    }, 5000);
+</script>

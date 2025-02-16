@@ -91,7 +91,7 @@ Util.buildVehicleDetail = function (vehicle) {
 * ************************************ */
 Util.buildLoginForm = function () {
     return `
-        <form id="login-form" action="/account/login" method="POST">
+        <form id="login-form" action="/account/login" method="post">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
 
@@ -109,27 +109,29 @@ Util.buildLoginForm = function () {
 /* **************************************
 * Build the Registration view HTML
 * ************************************ */
-Util.getRegisterForm = function (){
+Util.getRegisterForm = function () {
     return `
         <form action="/account/register" method="POST" class="register-form">
             <label for="first_name">First Name:</label>
-            <input type="text" id="first_name" name="first_name" required>
+            <input type="text" id="first_name" name="account_firstname" required>
 
             <label for="last_name">Last Name:</label>
-            <input type="text" id="last_name" name="last_name" required>
+            <input type="text" id="last_name" name="account_lastname" required>
 
             <label for="email">Email Address:</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="account_email" required>
 
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required minlength="12" 
-                    pattern="(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{12,}" 
-                    title="Must contain at least one number, one uppercase letter, one special character, and be at least 12 characters long">
+            <input type="password" id="password" name="account_password" required minlength="12">
+            <small class="password-requirements">
+                * Password must be at least 12 characters long and include at least one uppercase letter, one number, and one special character.
+            </small>
 
             <button type="submit">Register</button>
         </form>
     `;
 };
+
 
 
 

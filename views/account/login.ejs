@@ -1,10 +1,24 @@
 <main id="account-login-page">
     <% if (title) { %>
         <h1 class="classification-title"><%= title %></h1>
-    <% } else { %>
-        <% res.redirect('/') %>
     <% } %>
 
-    <%- loginForm %> 
+    <% if (messages && messages.length > 0) { %>
+        <div class="alert alert-success">
+            <%= messages %>
+        </div>
+    <% } %>
 
+    <%- loginForm %>
 </main>
+
+<script>
+    // Waits 5 seconds and makes alerts fade out
+    setTimeout(() => {
+        const alerts = document.querySelectorAll(".alert");
+        alerts.forEach(alert => {
+            alert.classList.add("fade-out");
+            setTimeout(() => alert.remove(), 1000); // Removes element after animation
+        });
+    }, 5000);
+</script>
