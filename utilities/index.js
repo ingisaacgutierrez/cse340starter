@@ -96,7 +96,10 @@ Util.buildLoginForm = function () {
             <input type="email" id="email" name="email" required>
 
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" required minlength="12" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+            <small class="password-requirements">
+                * Password must be at least 12 characters long and include at least one uppercase letter, one number, and one special character.
+            </small>
 
             <button type="submit">Login</button>
         </form>
@@ -113,16 +116,16 @@ Util.getRegisterForm = function () {
     return `
         <form action="/account/register" method="POST" class="register-form">
             <label for="first_name">First Name:</label>
-            <input type="text" id="first_name" name="account_firstname" required>
+            <input type="text" id="first_name" name="account_firstname" required value="<%= locals.account_firstname %>">
 
             <label for="last_name">Last Name:</label>
-            <input type="text" id="last_name" name="account_lastname" required>
+            <input type="text" id="last_name" name="account_lastname" required value="<%= locals.account_lastname %>">
 
             <label for="email">Email Address:</label>
-            <input type="email" id="email" name="account_email" required>
+            <input type="email" id="email" name="account_email" required value="<%= locals.account_email %>">
 
             <label for="password">Password:</label>
-            <input type="password" id="password" name="account_password" required minlength="12">
+            <input type="password" id="password" name="account_password" required minlength="12" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
             <small class="password-requirements">
                 * Password must be at least 12 characters long and include at least one uppercase letter, one number, and one special character.
             </small>

@@ -21,6 +21,7 @@ invDetailCont.getVehicleDetail = async function (req, res, next) {
             title: "",
             nav,
             vehicleDetail, 
+            errors: null,
         });
     } catch (error) {
         console.error("Error al obtener detalles del vehículo:", error);
