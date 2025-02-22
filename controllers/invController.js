@@ -1,5 +1,6 @@
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")
+const { validationResult } = require("express-validator");
 
 const invCont = {}
 
@@ -77,5 +78,53 @@ invCont.addClassification = async function (req, res, next) {
         res.redirect("/inv/add-classification");
     }
 };
+
+/**
+ * Render Add Inventory View
+ */
+invCont.buildAddInventoryView = async function (req, res) {
+    let nav = await utilities.getNav();
+    let classifications = await invModel.getClassifications();
+    let addInventoryForm = utilities.buildAddInventoryForm(classifications.rows); // Genera el formulario completo
+
+    res.render("./inventory/add-inventory", {
+        title: "Add New Vehicle",
+        nav,
+        addInventoryForm, // Ahora pasamos el formulario completo
+        messages: req.flash("info"),
+        errors: null,
+    });
+};
+
+
+/**
+ * Handle adding a new inventory item
+ */
+invCont.addInventory = async function (req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        req.flash("info", { type: "error", text: "Please fix the errors and try again." });
+        return res.redirect("/inv/add-inventory");
+    }
+
+    const vehicleData = req.body;
+    
+    try {
+        const result = await invModel.insertInventory(vehicleData);
+        if (result) {
+            req.flash("info", { type: "success", text: "Vehicle added successfully!" });
+            return res.redirect("/inv");
+
+        } else {
+            req.flash("info", { type: "error", text: "Failed to add vehicle." });
+            return res.redirect("/inv/add-inventory");
+        }
+    } catch (error) {
+        console.error("Error adding vehicle:", error);
+        req.flash("info", { type: "error", text: "Database error." });
+        return res.redirect("/inv/add-inventory");
+    }
+};
+
 
 module.exports = invCont

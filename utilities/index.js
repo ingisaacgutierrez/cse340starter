@@ -168,6 +168,72 @@ Util.buildAddClassificationForm = function () {
 };
 
 
+/* **************************************
+* Build the Add Inventory Form HTML
+* ************************************ */
+Util.buildAddInventoryForm = function (classifications) {
+    let classificationOptions = classifications.map(classification => `
+        <option value="${classification.classification_id}">${classification.classification_name}</option>
+    `).join('');
+
+    return `
+        <form action="/inv/add-inventory" method="post" class="add-inventory-form">
+            <label for="inv_make">Make:</label>
+            <input type="text" id="inv_make" name="inv_make" required>
+
+            <label for="inv_model">Model:</label>
+            <input type="text" id="inv_model" name="inv_model" required>
+
+            <label for="inv_year">Year:</label>
+            <input type="number" id="inv_year" name="inv_year" required min="1900" max="2099">
+
+
+            <label for="inv_description">Description:</label>
+            <textarea id="inv_description" name="inv_description" required></textarea>
+
+            <label for="inv_image">Image URL:</label>
+            <input type="text" id="inv_image" name="inv_image" required value="/images/vehicles/no-image.png">
+
+            <label for="inv_thumbnail">Thumbnail URL:</label>
+            <input type="text" id="inv_thumbnail" name="inv_thumbnail" required value="/images/vehicles/no-image.png">
+
+
+            <label for="inv_price">Price:</label>
+            <input type="number" id="inv_price" name="inv_price" required>
+
+            <label for="inv_miles">Miles:</label>
+            <input type="number" id="inv_miles" name="inv_miles" required>
+
+            <label for="inv_color">Color:</label>
+            <input type="text" id="inv_color" name="inv_color" required>
+
+            <label for="classification_id">Classification:</label>
+            <select id="classification_id" name="classification_id" required>
+                ${classificationOptions}
+            </select>
+
+            <button type="submit">Add Vehicle</button>
+        </form>
+    `;
+};
+
+
+/* ************************
+ * Constructs the classification dropdown
+ ************************** */
+Util.buildClassificationDropdown = async function (selectedId = null) {
+    let data = await invModel.getClassifications();
+    let dropdown = '<select id="classification_id" name="classification_id" required>';
+    dropdown += '<option value="">Select a classification</option>';
+
+    data.rows.forEach((row) => {
+        let selected = selectedId == row.classification_id ? "selected" : "";
+        dropdown += `<option value="${row.classification_id}" ${selected}>${row.classification_name}</option>`;
+    });
+
+    dropdown += "</select>";
+    return dropdown;
+};
 
 
 /* ****************************************

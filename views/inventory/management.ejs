@@ -1,3 +1,10 @@
+<% if (messages && messages('info').length > 0) { %>
+    <div class="flash-messages">
+        <% messages('info').forEach(msg => { %>
+            <p class="<%= msg.type %>"><%= msg.text %></p>
+        <% }) %>
+        </div>
+    <% } %>
 <main>
     <h1>Vehicle Management</h1>
 
