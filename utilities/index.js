@@ -5,24 +5,26 @@ const Util = {}
  * Constructs the nav HTML unordered list
  ************************** */
 Util.getNav = async function (req, res, next) {
-    let data = await invModel.getClassifications()
-    let list = "<ul>"
-    list += '<li><a href="/" title="Home page">Home</a></li>'
+    let data = await invModel.getClassifications();
+    let list = "<ul>";
+    list += '<li><a href="/" title="Home page">Home</a></li>';
     data.rows.forEach((row) => {
-        list += "<li>"
+        list += "<li>";
         list +=
-        '<a href="/inv/type/' +
-        row.classification_id +
-        '" title="See our inventory of ' +
-        row.classification_name +
-        ' vehicles">' +
-        row.classification_name +
-        "</a>"
-        list += "</li>"
-    })
-    list += "</ul>"
-    return list
-}
+            '<a href="/inv/type/' +
+            row.classification_id +
+            '" title="See our inventory of ' +
+            row.classification_name +
+            ' vehicles">' +
+            row.classification_name +
+            "</a>";
+        list += "</li>";
+    });
+    list += "</ul>";
+
+    return list;
+};
+
 
 
 /* **************************************
@@ -146,6 +148,22 @@ Util.buildManagementView = function () {
                 <li><a href="/inv/add-inventory" title="Agregar nuevo inventario">Add new Vehicule</a></li>
             </ul>
         </nav>
+    `;
+};
+
+/* **************************************
+* Build the Add Classification view HTML
+* ************************************ */
+Util.buildAddClassificationForm = function () {
+    return `
+        <h2>Add New Classification</h2>
+        <form class="add-classification-form" action="/inv/add-classification" method="post">
+            <label for="classification_name">Classification Name:</label>
+            <input type="text" id="classification_name" name="classification_name" required 
+                    pattern="^[a-zA-Z0-9]+$" title="No spaces or special characters allowed">
+            <small>* No spaces or special characters allowed.</small>
+            <button type="submit">Add Classification</button>
+        </form>
     `;
 };
 

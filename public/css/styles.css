@@ -460,6 +460,57 @@ p a:hover {
   display: inline;
 }
 
+/****************************** add classification form styles  *******************************/
+.add-classification-form {
+  max-width: 90%;
+  margin: 20px auto;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.add-classification-form h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.add-classification-form label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+.add-classification-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-classification-form small {
+  display: block;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.add-classification-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.add-classification-form button:hover {
+  background-color: #0056b3;
+}
 
 /****************************** --------------------------------- Desktop styles ---------------------------------*******************************/
 @media (min-width: 1024px) {
@@ -616,6 +667,24 @@ p a:hover {
 /****************************** management view styles *******************************/
 .management-nav {
   padding: 10px;
+}
+
+/****************************** add classification form styles  *******************************/
+.add-classification-form {
+  max-width: 500px;
+  padding: 20px;
+}
+
+.add-classification-form h2 {
+  font-size: 1.8rem;
+}
+
+.add-classification-form input {
+  font-size: 1rem;
+}
+
+.add-classification-form button {
+  font-size: 1.1rem;
 }
 
 }

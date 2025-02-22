@@ -1,0 +1,9 @@
+<% if (messages && messages.length > 0) { %>
+    <ul class="flash-messages">
+        <% messages.forEach(function(msg) { %>
+        <li><%= msg.text %></li>
+            <% }); %>
+    </ul>
+<% } %>
+
+<%- addClassificationForm %>
