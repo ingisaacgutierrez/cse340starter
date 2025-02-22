@@ -209,6 +209,7 @@ Util.buildAddInventoryForm = function (classifications) {
 
             <label for="classification_id">Classification:</label>
             <select id="classification_id" name="classification_id" required>
+                <option value="" disabled selected>Choose a classification</option>
                 ${classificationOptions}
             </select>
 
