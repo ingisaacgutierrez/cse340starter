@@ -135,6 +135,20 @@ Util.getRegisterForm = function () {
     `;
 };
 
+/* **************************************
+* Build the Management view HTML
+* ************************************ */
+Util.buildManagementView = function () {
+    return `
+        <nav class="management-nav">
+            <ul>
+                <li><a href="/inv/add-classification" title="Añadir nueva clasificación">Add new Classification</a></li>
+                <li><a href="/inv/add-inventory" title="Agregar nuevo inventario">Add new Vehicule</a></li>
+            </ul>
+        </nav>
+    `;
+};
+
 
 
 

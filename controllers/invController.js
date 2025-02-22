@@ -20,4 +20,19 @@ invCont.buildByClassificationId = async function (req, res, next) {
     })
 }
 
+/* ***************************
+ *  Build Management View
+ * ************************** */
+invCont.buildManagementView = async function (req, res, next) {
+    let nav = await utilities.getNav()
+    let managementView = await utilities.buildManagementView()
+
+    res.render("./inventory/management", {
+        title: "Vehicle Management",
+        nav,
+        managementView,
+        errors: null,
+    })
+}
+
 module.exports = invCont

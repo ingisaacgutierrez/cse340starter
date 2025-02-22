@@ -431,6 +431,36 @@ p a:hover {
 }
 
 
+/****************************** management view styles *******************************/
+.management-nav {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.management-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: block;
+}
+
+.management-nav ul li {
+  text-align: left;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.management-nav ul li a {
+  text-decoration: underline;
+  color: blue;
+  font-weight: bold;
+  padding: 0;
+  display: inline;
+}
+
+
 /****************************** --------------------------------- Desktop styles ---------------------------------*******************************/
 @media (min-width: 1024px) {
   body {
@@ -581,4 +611,11 @@ p a:hover {
     font-size: 1rem;
     border-radius: 8px;
 }
+
+
+/****************************** management view styles *******************************/
+.management-nav {
+  padding: 10px;
+}
+
 }
