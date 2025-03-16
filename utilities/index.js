@@ -286,6 +286,18 @@ Util.checkLogin = (req, res, next) => {
     }
    }
 
+
+Util.buildClassificationList = async function () {
+    let data = await invModel.getClassifications(); // Asegúrate de que esta función existe en el modelo
+    let list = '<select id="classificationList">';
+    list += '<option value="">Choose a Classification</option>';
+    data.rows.forEach((classification) => {
+        list += `<option value="${classification.classification_id}">${classification.classification_name}</option>`;
+    });
+    list += "</select>";
+    return list;
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
