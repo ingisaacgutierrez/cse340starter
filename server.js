@@ -11,6 +11,7 @@ const session = require("express-session");
 const expressLayouts = require("express-ejs-layouts");
 const env = require("dotenv").config();
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser"); // Added cookie-parser
 
 const pool = require("./database/");
 const baseController = require("./controllers/baseController");
@@ -38,6 +39,9 @@ app.set("layout", "./layouts/layout"); // not at views root
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
+// Cookie Parser Middleware
+app.use(cookieParser()); // Added middleware to use cookie-parser
+
 // Session Middleware
 app.use(
   session({
@@ -62,6 +66,9 @@ app.use((req, res, next) => {
 // Static Files Middleware
 app.use(static);
 
+// JWT Middleware
+app.use(utilities.checkJWTToken);
+
 /* ***********************
  * Routes
  *************************/
@@ -85,22 +92,19 @@ app.use(async (req, res, next) => {
 });
 
 /* ***********************
- * Express Error Handler
- *************************/
+* Express Error Handler
+* Place after all other middleware
+*************************/
 app.use(async (err, req, res, next) => {
-  let nav = await utilities.getNav();
-  console.error(`Error at: "${req.originalUrl}": ${err.message}`);
-
-  let message = "Oh no! There was a crash. Maybe try a different route?";
-  let isServerError = err.status !== 404;
-
+  let nav = await utilities.getNav()
+  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
+  if(err.status == 404){ message = err.message} else {message = 'Oh no! There was a crash. Maybe try a different route?'}
   res.render("errors/error", {
-    title: err.status || "Server Error",
-    message: err.message || message,
-    nav,
-    isServerError,
-  });
-});
+    title: err.status || 'Server Error',
+    message,
+    nav
+  })
+})
 
 /* ***********************
  * Local Server Information

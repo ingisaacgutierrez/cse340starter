@@ -1,5 +1,8 @@
-const invModel = require("../models/inventory-model")
-const Util = {}
+const invModel = require("../models/inventory-model");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
+const Util = {};
 
 /* ************************
  * Constructs the nav HTML unordered list
@@ -90,7 +93,7 @@ Util.buildVehicleDetail = function (vehicle) {
 
 /* **************************************
 * Build the Login view HTML
-* ************************************ */
+
 Util.buildLoginForm = function () {
     return `
         <form id="login-form" action="/account/login" method="post">
@@ -109,6 +112,8 @@ Util.buildLoginForm = function () {
         <p>No account? <a href="/account/register">Sign up</a></p>
     `;
 };
+* ************************************ */
+
 
 
 /* **************************************
@@ -118,13 +123,13 @@ Util.getRegisterForm = function () {
     return `
         <form action="/account/register" method="POST" class="register-form">
             <label for="first_name">First Name:</label>
-            <input type="text" id="first_name" name="account_firstname" required value="<%= locals.account_firstname %>">
+            <input type="text" id="first_name" name="account_firstname" required">
 
             <label for="last_name">Last Name:</label>
-            <input type="text" id="last_name" name="account_lastname" required value="<%= locals.account_lastname %>">
+            <input type="text" id="last_name" name="account_lastname" required">
 
             <label for="email">Email Address:</label>
-            <input type="email" id="email" name="account_email" required value="<%= locals.account_email %>">
+            <input type="email" id="email" name="account_email" required">
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="account_password" required minlength="12" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
@@ -236,6 +241,50 @@ Util.buildClassificationDropdown = async function (selectedId = null) {
     return dropdown;
 };
 
+/* ****************************************
+ * Middleware to check token validity
+ **************************************** */
+Util.checkJWTToken = (req, res, next) => {
+    if (req.cookies.jwt) {
+        jwt.verify(
+            req.cookies.jwt,
+            process.env.ACCESS_TOKEN_SECRET,
+            function (err, accountData) {
+                if (err) {
+                    req.flash("Please log in");
+                    res.clearCookie("jwt");
+                    return res.redirect("/account/login");
+                }
+                res.locals.accountData = accountData;
+                res.locals.loggedin = 1;
+                next();
+            }
+        );
+    } else {
+        next();
+    }
+};
+
+/* **************************************
+* Build the Management Ac count View
+* ************************************ */
+Util.buildManagementAccountView = function () {
+    return `
+        <h1>You are login</h1>
+    `;
+};
+
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+Util.checkLogin = (req, res, next) => {
+    if (res.locals.loggedin) {
+      next()
+    } else {
+      req.flash("notice", "Please log in.")
+      return res.redirect("/account/login")
+    }
+   }
 
 /* ****************************************
  * Middleware For Handling Errors

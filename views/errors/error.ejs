@@ -1,16 +1,6 @@
-<% if (!isServerError) { %>
-    <% if (title) { %>
-        <h1><%= title %></h1>
-    <% } else { %>
-        <% res.redirect('/') %>
-    <% } %>
-    <p><%= message %></p>
+
+<% if (title) { %>
+    <h1><%= title %></h1>
 <% } %>
 
-<% if (isServerError) { %>
-    <div class="trigger-error">
-        <img src="/images/funny-error/funny-error.jpg" alt="Funny Error Image">
-    </div>
-<% } %>
-
-
+<%- message %>
