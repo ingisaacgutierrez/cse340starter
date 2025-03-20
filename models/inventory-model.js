@@ -8,6 +8,22 @@ async function getClassifications(){
 }
 
 /* ***************************
+ *  Get classification by ID
+ * ************************** */
+async function getClassificationById(classificationId) {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM public.classification WHERE classification_id = $1",
+      [classificationId]
+    );
+    return result.rows[0]; // Devuelve el primer resultado encontrado o undefined si no hay resultados
+  } catch (error) {
+    console.error("Error fetching classification by ID:", error);
+    throw error;
+  }
+}
+
+/* ***************************
  *  Get all inventory items and classification_name by classification_id
  * ************************** */
 async function getInventoryByClassificationId(classification_id) {
@@ -82,4 +98,59 @@ async function insertInventory(vehicleData) {
   }
 }
 
-module.exports = { getClassifications, getInventoryByClassificationId, getVehicleById, insertClassification, insertInventory };
+/* ***************************
+ *  Get Inventory Item by ID
+ * ************************** */
+async function getInventoryById(inv_id) {
+  try {
+      const result = await pool.query("SELECT * FROM inventory WHERE inv_id = $1", [inv_id]);
+      return result.rows[0];
+  } catch (error) {
+      console.error("Error getting inventory by ID:", error);
+  }
+}
+
+/* ***************************
+ *  Update inventory item
+ * ************************** */
+async function updateInventory(vehicleData) {
+  try {
+      const sql = `
+          UPDATE inventory
+          SET 
+              inv_make = $1, 
+              inv_model = $2, 
+              inv_year = $3, 
+              inv_description = $4, 
+              inv_image = $5, 
+              inv_thumbnail = $6, 
+              inv_price = $7, 
+              inv_miles = $8, 
+              inv_color = $9, 
+              classification_id = $10
+          WHERE inv_id = $11
+          RETURNING *;
+      `;
+
+      const values = [
+          vehicleData.inv_make,
+          vehicleData.inv_model,
+          vehicleData.inv_year,
+          vehicleData.inv_description,
+          vehicleData.inv_image,
+          vehicleData.inv_thumbnail,
+          vehicleData.inv_price,
+          vehicleData.inv_miles,
+          vehicleData.inv_color,
+          vehicleData.classification_id,
+          vehicleData.inv_id
+      ];
+
+      return await pool.query(sql, values);
+  } catch (error) {
+      console.error("Database error updating inventory:", error);
+      throw error;
+  }
+}
+
+module.exports = { getClassifications, getClassificationById, getInventoryByClassificationId, getVehicleById, insertClassification, insertInventory, getInventoryById, updateInventory};

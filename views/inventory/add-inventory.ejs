@@ -1,11 +1,13 @@
 <h1><%= title %></h1>
+<%- messages() %>
 
-    <% if (messages && messages.length > 0) { %>
-        <div class="flash-messages">
-            <% messages.forEach(function(message) { %>
-                <p class="<%= message.type %>"><%= message.text %></p>
-            <% }); %>
-        </div>
-    <% } %>
+<% if (errors) { %>
+    <ul class="notice">
+    <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+    <%  }) %>
+    </ul>
+
+<% } %>
 
     <%- addInventoryForm %>

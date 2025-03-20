@@ -570,6 +570,65 @@ p a:hover {
   background: #0056b3;
 }
 
+
+/****************************** edit inventory form styles  *******************************/
+.edit-inventory-form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-inventory-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-inventory-form label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.edit-inventory-form input,
+.edit-inventory-form select,
+.edit-inventory-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.edit-inventory-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.edit-inventory-form button {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.edit-inventory-form button:hover {
+  background-color: #0056b3;
+}
+
+.edit-inventory-form button:disabled {
+  background-color: #b0b0b0;
+  cursor: not-allowed;
+}
+
+
 /****************************** --------------------------------- Desktop styles ---------------------------------*******************************/
 @media (min-width: 1024px) {
   body {
@@ -768,6 +827,24 @@ p a:hover {
   margin-top: 25px;
   padding: 12px;
   width: 200px;
+}
+
+
+/****************************** edit inventory form styles  *******************************/
+
+edit-inventory-form {
+  max-width: 600px;
+  padding: 20px;
+}
+
+.edit-inventory-form input,
+.edit-inventory-form select,
+.edit-inventory-form textarea {
+  font-size: 18px;
+}
+
+.edit-inventory-form button {
+  font-size: 18px;
 }
 
 }

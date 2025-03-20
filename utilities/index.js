@@ -279,24 +279,43 @@ Util.buildManagementAccountView = function () {
  * ************************************ */
 Util.checkLogin = (req, res, next) => {
     if (res.locals.loggedin) {
-      next()
+        next()
+        } else {
+        req.flash("notice", "Please log in.")
+        return res.redirect("/account/login")
+        }
+}
+
+
+/* ****************************************
+ * Build Classification List
+ * ************************************ */
+Util.buildClassificationList = async function (selectedClassificationId = null) {
+    let data = await invModel.getClassifications();
+    let selectedClassification = selectedClassificationId
+        ? await invModel.getClassificationById(selectedClassificationId)
+        : null;
+
+    let list = '<select id="classificationList" name="classification_id">';
+    
+    if (selectedClassification) {
+        list += `<option value="${selectedClassification.classification_id}" selected>
+                    ${selectedClassification.classification_name}
+                </option>`;
     } else {
-      req.flash("notice", "Please log in.")
-      return res.redirect("/account/login")
+        list += '<option value="">Choose a Classification</option>';
     }
-   }
 
-
-Util.buildClassificationList = async function () {
-    let data = await invModel.getClassifications(); // Asegúrate de que esta función existe en el modelo
-    let list = '<select id="classificationList">';
-    list += '<option value="">Choose a Classification</option>';
     data.rows.forEach((classification) => {
-        list += `<option value="${classification.classification_id}">${classification.classification_name}</option>`;
+        if (!selectedClassification || classification.classification_id !== selectedClassification.classification_id) {
+            list += `<option value="${classification.classification_id}">${classification.classification_name}</option>`;
+        }
     });
+
     list += "</select>";
     return list;
-}
+};
+
 
 /* ****************************************
  * Middleware For Handling Errors
