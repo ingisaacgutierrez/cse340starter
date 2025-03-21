@@ -32,6 +32,9 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invControl
 
 // Route to display edit inventory form
 router.get("/edit/:inventory_id", invController.buildEditInventoryView);
-router.post("/update", invController.updateInventory);
+
+// Route to handle updating inventory
+router.post("/update", validation.inventoryRules(), validation.checkUpdateData, invController.updateInventory);
+
 
 module.exports = router;

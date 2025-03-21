@@ -56,6 +56,14 @@ app.use(
   })
 );
 
+//login save name 
+app.use((req, res, next) => {
+  res.locals.account_name = req.session.account_name || null;
+  res.locals.is_logged_in = req.session.is_logged_in || false;
+  next();
+});
+
+
 // Express Messages Middleware
 app.use(require("connect-flash")());
 app.use((req, res, next) => {

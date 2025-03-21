@@ -111,46 +111,48 @@ async function getInventoryById(inv_id) {
 }
 
 /* ***************************
- *  Update inventory item
+ *  Update Inventory Data
  * ************************** */
-async function updateInventory(vehicleData) {
+async function updateInventory(
+  inv_id,
+  inv_make,
+  inv_model,
+  inv_description,
+  inv_image,
+  inv_thumbnail,
+  inv_price,
+  inv_year,
+  inv_miles,
+  inv_color,
+  classification_id
+) {
   try {
-      const sql = `
-          UPDATE inventory
-          SET 
-              inv_make = $1, 
-              inv_model = $2, 
-              inv_year = $3, 
-              inv_description = $4, 
-              inv_image = $5, 
-              inv_thumbnail = $6, 
-              inv_price = $7, 
-              inv_miles = $8, 
-              inv_color = $9, 
-              classification_id = $10
-          WHERE inv_id = $11
-          RETURNING *;
-      `;
-
-      const values = [
-          vehicleData.inv_make,
-          vehicleData.inv_model,
-          vehicleData.inv_year,
-          vehicleData.inv_description,
-          vehicleData.inv_image,
-          vehicleData.inv_thumbnail,
-          vehicleData.inv_price,
-          vehicleData.inv_miles,
-          vehicleData.inv_color,
-          vehicleData.classification_id,
-          vehicleData.inv_id
-      ];
-
-      return await pool.query(sql, values);
+    const sql =
+      "UPDATE public.inventory SET inv_make = $1, inv_model = $2, inv_description = $3, inv_image = $4, inv_thumbnail = $5, inv_price = $6, inv_year = $7, inv_miles = $8, inv_color = $9, classification_id = $10 WHERE inv_id = $11 RETURNING *"
+    const data = await pool.query(sql, [
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id,
+      inv_id
+    ])
+    return data.rows[0]
   } catch (error) {
-      console.error("Database error updating inventory:", error);
-      throw error;
+    console.error("model error: " + error)
   }
 }
 
-module.exports = { getClassifications, getClassificationById, getInventoryByClassificationId, getVehicleById, insertClassification, insertInventory, getInventoryById, updateInventory};
+module.exports = { getClassifications, 
+                    getClassificationById, 
+                    getInventoryByClassificationId, 
+                    getVehicleById, 
+                    insertClassification, 
+                    insertInventory, 
+                    getInventoryById, 
+                    updateInventory};

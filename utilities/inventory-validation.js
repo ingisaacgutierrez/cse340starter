@@ -88,6 +88,28 @@ validate.checkInventoryData = async (req, res, next) => {
     next();
 };
 
+/* *******************************
+ * Check update inventory data and return errors or continue
+ * ******************************* */
+validate.checkUpdateData = async (req, res, next) => {
+    const errors = validationResult(req);
+    const { inv_id } = req.body;  
+    
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav();
+        res.render("inventory/edit-inventory", { 
+            errors,
+            title: "Edit Vehicle",  
+            nav,
+            vehicle: req.body,
+            inv_id,
+        });
+        return;
+    }
+    next();
+};
+
 module.exports = validate;
+
 
 

@@ -166,32 +166,64 @@ invCont.buildEditInventoryView = async function (req, res, next) {
 };
 
 /* ***************************
- *  Handle updating an inventory item
+ *  Update Inventory Data
  * ************************** */
-invCont.updateInventory = async function (req, res) {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        req.flash("info", { type: "error", text: "Please fix the errors and try again." });
-        return res.redirect(`/inv/edit/${req.body.inv_id}`);
+invCont.updateInventory = async function (req, res, next) {
+    let nav = await utilities.getNav()
+    const {
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id,
+    } = req.body
+    const updateResult = await invModel.updateInventory(
+      inv_id,  
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id
+    )
+  
+    if (updateResult) {
+      const itemName = updateResult.inv_make + " " + updateResult.inv_model
+      req.flash("notice", `The ${itemName} was successfully updated.`)
+      res.redirect("/inv/")
+    } else {
+      const classificationSelect = await utilities.buildClassificationList(classification_id)
+      const itemName = `${inv_make} ${inv_model}`
+      req.flash("notice", "Sorry, the insert failed.")
+      res.status(501).render("inventory/edit-inventory", {
+      title: "Edit " + itemName,
+      nav,
+      classificationSelect: classificationSelect,
+      errors: null,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id
+      })
     }
-
-    const vehicleData = req.body;
-
-    try {
-        const result = await invModel.updateInventory(vehicleData);
-        if (result.rowCount > 0) {
-            req.flash("info", { type: "success", text: "Vehicle updated successfully!" });
-            return res.redirect("/inv");
-        } else {
-            req.flash("info", { type: "error", text: "Failed to update vehicle." });
-            return res.redirect(`/inv/edit/${vehicleData.inv_id}`);
-        }
-    } catch (error) {
-        console.error("Error updating vehicle:", error);
-        req.flash("info", { type: "error", text: "Database error." });
-        return res.redirect(`/inv/edit/${vehicleData.inv_id}`);
-    }
-};
+  }
 
 
 module.exports = invCont;

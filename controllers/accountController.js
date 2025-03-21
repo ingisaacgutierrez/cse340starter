@@ -96,29 +96,38 @@ async function accountLogin(req, res) {
     let nav = await utilities.getNav();
     const { account_email, account_password } = req.body;
     const accountData = await accountModel.getAccountByEmail(account_email);
+
     if (!accountData) {
         req.flash("notice", "Please check your credentials and try again.");
-        res.status(400).render("account/login", {
+        return res.status(400).render("account/login", {
             title: "Login",
             nav,
             errors: null,
             account_email,
         });
-        return;
     }
+
     try {
         if (await bcrypt.compare(account_password, accountData.account_password)) {
             delete accountData.account_password;
+
+            // save login
+            req.session.account_id = accountData.account_id; // id
+            req.session.account_name = accountData.account_firstname; // name
+            req.session.is_logged_in = true; // is login true or false
+
             const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 });
+
             if (process.env.NODE_ENV === 'development') {
                 res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 });
             } else {
                 res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 });
             }
+
             return res.redirect("/account/");
         } else {
-            req.flash("message notice", "Please check your credentials and try again.");
-            res.status(400).render("account/login", {
+            req.flash("notice", "Please check your credentials and try again.");
+            return res.status(400).render("account/login", {
                 title: "Login",
                 nav,
                 errors: null,
@@ -126,9 +135,12 @@ async function accountLogin(req, res) {
             });
         }
     } catch (error) {
-        throw new Error('Access Forbidden');
+        console.error("Login error:", error);
+        req.flash("notice", "Unexpected error during login.");
+        return res.status(500).redirect("/account/login");
     }
 }
+
 
 
 
@@ -136,19 +148,30 @@ async function accountLogin(req, res) {
  *  Deliver account management view
  * *************************************** */
 async function buildAccountManagement(req, res, next) {
-  try {
-      let nav = await utilities.getNav();
-      let accountManagement = await utilities.buildManagementAccountView()
-      res.render("account/account-management", {
-          title: "Account Management",
-          nav,
-          accountManagement,
-          messages: req.flash("notice")
-      });
-  } catch (error) {
-      next(error);
-  }
+    try {
+        let nav = await utilities.getNav();
+        let accountManagement = await utilities.buildManagementAccountView()
+        res.render("account/account-management", {
+            title: "Account Management",
+            nav,
+            accountManagement,
+            messages: req.flash("notice")
+        });
+    } catch (error) {
+        next(error);
+    }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement };
+/* ****************************************
+ * Logout
+ * *************************************** */
 
+async function logout(req, res) {
+    req.session.destroy(() => {
+        res.clearCookie("jwt"); 
+        res.redirect("/");
+    });
+}
+
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement, logout};

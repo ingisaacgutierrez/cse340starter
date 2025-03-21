@@ -33,6 +33,10 @@ router.post(
 // routes/accountRoute.js
 router.get("/", utilities.handleErrors(accountController.buildAccountManagement));
 
+//logut
+router.get("/logout", accountController.logout);
+
+
 
 module.exports = router;
 
