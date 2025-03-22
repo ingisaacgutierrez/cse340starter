@@ -55,7 +55,6 @@ async function getVehicleById(vehicleId) {
   }
 }
 
-
 /* ***************************
  *  Insert new classification
  * ************************** */
@@ -148,6 +147,20 @@ async function updateInventory(
   }
 }
 
+/* ***************************
+ *  Delete Inventory Item
+ * ************************** */
+async function deleteInventory(inv_id) {
+  try {
+    const sql = 'DELETE FROM inventory WHERE inv_id = $1';
+    const data = await pool.query(sql, [inv_id]);
+    return data;
+  } catch (error) {
+    console.error("Delete Inventory Error: ", error);
+    throw error;
+  }
+}
+
 module.exports = { getClassifications, 
                     getClassificationById, 
                     getInventoryByClassificationId, 
@@ -155,4 +168,5 @@ module.exports = { getClassifications,
                     insertClassification, 
                     insertInventory, 
                     getInventoryById, 
-                    updateInventory};
+                    updateInventory,
+                    deleteInventory};

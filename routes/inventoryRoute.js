@@ -36,5 +36,12 @@ router.get("/edit/:inventory_id", invController.buildEditInventoryView);
 // Route to handle updating inventory
 router.post("/update", validation.inventoryRules(), validation.checkUpdateData, invController.updateInventory);
 
+// Route to display delete confirmation view
+router.get("/delete/:inventory_id", utilities.handleErrors(invController.buildDeleteConfirmationView));
+
+// Route to handle deleting inventory
+router.post("/delete", utilities.handleErrors(invController.deleteInventory));
+
+
 
 module.exports = router;
