@@ -1,3 +1,4 @@
+const utilities = require(".")
 const { body, validationResult } = require("express-validator");
 const validate = {};
 
@@ -75,18 +76,22 @@ validate.inventoryRules = () => {
  * ******************************* */
 validate.checkInventoryData = async (req, res, next) => {
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav();
-        res.render("inventory/add-inventory", {
-            errors,
+        let classifications = await utilities.getClassifications(); // Asegurar que tienes acceso a esto
+        
+        return res.render("inventory/add-inventory", {
             title: "Add New Vehicle",
             nav,
-            vehicle: req.body,
+            errors: errors.array(), // Convertir los errores en un array
+            classifications: classifications.rows, // Enviar las clasificaciones a la vista
+            vehicle: req.body, // Mantener los valores ingresados por el usuario
         });
-        return;
     }
     next();
 };
+
 
 /* *******************************
  * Check update inventory data and return errors or continue
