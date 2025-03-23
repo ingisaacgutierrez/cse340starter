@@ -1,10 +1,19 @@
 <h1>Account Management</h1>
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+    <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+    <% }) %>
+    </ul>
+<% } %>
 
 <% if (account_name) { %>
     <h2>Welcome <%= account_name %></h2>
 <% } %>
 
-<!-- Link para actualizar la cuenta -->
+
 <p>
     <a href="/account/update-account/<%= account_id %>">Update Account Information</a>
 
@@ -15,3 +24,11 @@
     <p><a href="/inv">Access Inventory Management</a></p>
 <% } %>
 
+<script>
+    setTimeout(function() {
+        const flashMessage = document.getElementById('flash-message');
+        if (flashMessage) {
+            flashMessage.style.display = 'none';
+        }
+    }, 5000); 
+</script>

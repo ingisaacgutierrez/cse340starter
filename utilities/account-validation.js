@@ -93,25 +93,7 @@ validate.loginRules = () => {
     ];
 };
 
-/* ******************************
- * Check login data and return errors or continue
- * ***************************** */
-validate.checkLoginData = async (req, res, next) => {
-    const { account_email } = req.body;
-    let errors = validationResult(req);
 
-    if (!errors.isEmpty()) {
-        let nav = await utilities.getNav();
-        res.render("account/login", {
-            errors,
-            title: "Login",
-            nav,
-            account_email,
-        });
-        return;
-    }
-    next();
-};
 
 /* ******************************
  * Check login data and return errors or continue
@@ -154,12 +136,6 @@ validate.updateAccountRules = () => {
             .isEmail()
             .normalizeEmail()
             .withMessage("A valid email is required.")
-            .custom(async (account_email, { req }) => {
-                const emailExists = await accountModel.checkExistingEmail(account_email);
-                if (emailExists && account_email !== req.body.original_email) {
-                    throw new Error("Email is already in use.");
-                }
-            }),
     ];
 };
 
@@ -168,22 +144,21 @@ validate.updateAccountRules = () => {
  * ***************************** */
 validate.checkUpdateAccountData = async (req, res, next) => {
     let errors = validationResult(req);
-
+  
     if (!errors.isEmpty()) {
-        let nav = await utilities.getNav();
-        res.render("account/update", {
-            errors,
-            title: "Update Account",
-            nav,
-            account_firstname: req.body.account_firstname,
-            account_lastname: req.body.account_lastname,
-            account_email: req.body.account_email,
-        });
-        return;
+      let nav = await utilities.getNav();
+      res.render("account/update-account", { // Corregido aquí
+        errors,
+        title: "Update Account",
+        nav,
+        account_firstname: req.body.account_firstname,
+        account_lastname: req.body.account_lastname,
+        account_email: req.body.account_email,
+      });
+      return;
     }
     next();
-};
-
+  };
 /* ******************************
  *  Password Update Validation Rules
  * ***************************** */
@@ -208,18 +183,22 @@ validate.updatePasswordRules = () => {
  * ***************************** */
 validate.checkUpdatePasswordData = async (req, res, next) => {
     let errors = validationResult(req);
-
+  
     if (!errors.isEmpty()) {
-        let nav = await utilities.getNav();
-        res.render("account/update-password", {
-            errors,
-            title: "Update Password",
-            nav,
-        });
-        return;
+      let nav = await utilities.getNav();
+      res.render("account/update-account", { // Corregido aquí
+        errors,
+        title: "Update Password",
+        nav,
+        account_id: req.body.account_id,
+        account_firstname: req.body.account_firstname,
+        account_lastname: req.body.account_lastname,
+        account_email: req.body.account_email,
+      });
+      return;
     }
     next();
-};
+  };
 
 
 module.exports = validate

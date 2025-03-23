@@ -63,37 +63,42 @@ async function getAccountById(account_id) {
   }
 }
 
-/* *****************************
-* Update account information
-* ***************************** */
-async function updateAccountInfo(account_id, account_firstname, account_lastname, account_email) {
-  try {
+/* ***************************
+ * Update account information
+ * ************************** */
+async function updateAccount(account_id, account_firstname, account_lastname, account_email) {
+    try {
       const sql = `
-          UPDATE account 
-          SET account_firstname = $1, account_lastname = $2, account_email = $3 
-          WHERE account_id = $4
-          RETURNING *;
+        UPDATE account
+        SET account_firstname = $1, account_lastname = $2, account_email = $3
+        WHERE account_id = $4
+        RETURNING *
       `;
-      const result = await pool.query(sql, [account_firstname, account_lastname, account_email, account_id]);
-      return result;
-  } catch (error) {
-      console.error("Error updating account info:", error);
-      return null;
+      const data = await pool.query(sql, [account_firstname, account_lastname, account_email, account_id]);
+      return data.rows[0];
+    } catch (error) {
+      console.error('model error: ' + error);
+      return false;
+    }
   }
-}
-
-/* *****************************
-* Update account password
-* ***************************** */
-async function updatePassword(account_id, new_password) {
-  try {
-      const sql = "UPDATE account SET account_password = $1 WHERE account_id = $2 RETURNING *;";
-      const result = await pool.query(sql, [new_password, account_id]);
-      return result;
-  } catch (error) {
-      console.error("Error updating password:", error);
-      return null;
+  
+  /* ***************************
+   * Update account password
+   * ************************** */
+  async function updatePassword(account_id, hashedPassword) {
+    try {
+      const sql = `
+        UPDATE account
+        SET account_password = $1
+        WHERE account_id = $2
+        RETURNING *
+      `;
+      const data = await pool.query(sql, [hashedPassword, account_id]);
+      return data.rows[0];
+    } catch (error) {
+      console.error('model error: ' + error);
+      return false;
+    }
   }
-}
 
-module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccountInfo, updatePassword  };
+module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccount, updatePassword  };

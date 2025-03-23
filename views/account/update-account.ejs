@@ -1,6 +1,6 @@
 <h1>Update Account Information</h1>
 
-<%- messages %>
+<%- messages() %>
 
 <% if (errors) { %>
     <ul class="notice">
@@ -11,26 +11,26 @@
 <% } %>
 
 <!-- Update Account Form -->
-<form action="/account/update-account/<%= account.account_id %>" method="POST" class="form-update-account">
+<form action="/account/update" method="POST" class="form-update-account">
 
     <h2>Account Update</h2>
 
     <label for="account_firstname">First Name:</label>
-    <input type="text" id="account_firstname" name="account_firstname" required value="<%= account.account_firstname %>">
+    <input type="text" id="account_firstname" name="account_firstname" required value="<%= accountData.account_firstname %>">
 
     <label for="account_lastname">Last Name:</label>
-    <input type="text" id="account_lastname" name="account_lastname" required value="<%= account.account_lastname %>">
+    <input type="text" id="account_lastname" name="account_lastname" required value="<%= accountData.account_lastname %>">
 
     <label for="account_email">Email Address:</label>
-    <input type="email" id="account_email" name="account_email" required value="<%= account.account_email %>">
+    <input type="email" id="account_email" name="account_email" required value="<%= accountData.account_email %>">
 
-    <input type="hidden" name="account_id" value="<%= account.account_id %>">
+    <input type="hidden" name="account_id" value="<%= accountData.account_id %>">
 
     <button type="submit" class="btn-update">Update Account</button>
 </form>
 
 <!-- Update Password Form -->
-<form action="/account/update-account/<%= account.account_id %>" method="POST" class="form-update-password">
+<form action="/account/changePassword" method="POST" class="form-update-password">
 
     <h2>Change Password</h2>
     <p class="password-info">
@@ -40,7 +40,7 @@
     <label for="new_password">New Password:</label>
     <input type="password" id="new_password" name="new_password" required>
 
-    <input type="hidden" name="account_id" value="<%= account.account_id %>">
+    <input type="hidden" name="account_id" value="<%= accountData.account_id %>">
 
     <button type="submit" class="btn-update-password">Change Password</button>
 </form>

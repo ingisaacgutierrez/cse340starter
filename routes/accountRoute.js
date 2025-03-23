@@ -37,22 +37,22 @@ router.get("/", utilities.handleErrors(accountController.buildAccountManagement)
 router.get("/logout", accountController.logout);
 
 // Account update view
-router.get("/update-account/:id", utilities.handleErrors(accountController.buildAccountUpdate));
+router.get("/update-account/:account_id", utilities.handleErrors(accountController.buildUpdate));
 
 // Process account update
 router.post(
-    "/update-account/:id", 
+    "/update", 
     regValidate.updateAccountRules(), 
     regValidate.checkUpdateAccountData, 
-    utilities.handleErrors(accountController.updateAccountInfo)
+    utilities.handleErrors(accountController.updateAccount)
 );
 
 // Process password update
 router.post(
-    "/update-password", 
+    "/changePassword", 
     regValidate.updatePasswordRules(), 
     regValidate.checkUpdatePasswordData, 
-    utilities.handleErrors(accountController.updatePassword)
+    utilities.handleErrors(accountController.changePassword)
 );
 
 
