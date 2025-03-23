@@ -59,6 +59,7 @@ app.use(
 //login save name 
 app.use((req, res, next) => {
   res.locals.account_name = req.session.account_name || null;
+  res.locals.account_type = req.session.account_type || null;
   res.locals.is_logged_in = req.session.is_logged_in || false;
   next();
 });

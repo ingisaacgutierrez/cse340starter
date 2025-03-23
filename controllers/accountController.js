@@ -114,6 +114,7 @@ async function accountLogin(req, res) {
             // save login
             req.session.account_id = accountData.account_id; // id
             req.session.account_name = accountData.account_firstname; // name
+            req.session.account_type = accountData.account_type; //account type
             req.session.is_logged_in = true; // is login true or false
 
             const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 });
@@ -150,12 +151,12 @@ async function accountLogin(req, res) {
 async function buildAccountManagement(req, res, next) {
     try {
         let nav = await utilities.getNav();
-        let accountManagement = await utilities.buildManagementAccountView()
         res.render("account/account-management", {
             title: "Account Management",
             nav,
-            accountManagement,
-            messages: req.flash("notice")
+            account_id: req.session.account_id,
+            account_name: req.session.account_name,
+            account_type: req.session.account_type,
         });
     } catch (error) {
         next(error);
@@ -174,4 +175,83 @@ async function logout(req, res) {
 }
 
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement, logout};
+/**
+ * Deliver account update view
+ */
+async function buildAccountUpdate(req, res, next) {
+    try {
+        let nav = await utilities.getNav();
+        const accountData = await accountModel.getAccountById(req.params.id); // Obtener id de params
+        if (!accountData) {
+            req.flash("notice", "Account not found.");
+            return res.redirect("/account/");
+        }
+        res.render("account/update-account", { // Asegúrate de que el nombre del archivo sea correcto
+            title: "Update Account",
+            nav,
+            account: accountData, // Pasar objeto `account`
+            messages: req.flash("notice"),
+            errors: null,
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+/**
+ * Process account information update
+ */
+async function updateAccountInfo(req, res) {
+    let nav = await utilities.getNav();
+    const { account_firstname, account_lastname, account_email } = req.body;
+    const account_id = req.session.account_id;
+
+    try {
+        const result = await accountModel.updateAccount(account_id, account_firstname, account_lastname, account_email);
+        if (result.rowCount > 0) {
+            req.flash("notice", "Account information updated successfully.");
+        } else {
+            req.flash("notice", "No changes were made or update failed.");
+        }
+        return res.redirect("/account/");
+    } catch (error) {
+        req.flash("notice", "Unexpected error during update.");
+        return res.redirect("/account/update-account");
+    }
+}
+
+/**
+ * Process password update
+ */
+async function updatePassword(req, res) {
+    let nav = await utilities.getNav();
+    const { new_password } = req.body;
+    const account_id = req.session.account_id;
+
+    try {
+        const hashedPassword = bcrypt.hashSync(new_password, 10);
+        const result = await accountModel.updatePassword(account_id, hashedPassword);
+        if (result.rowCount > 0) {
+            req.flash("notice", "Password updated successfully.");
+        } else {
+            req.flash("notice", "Password update failed.");
+        }
+        return res.redirect("/account/");
+    } catch (error) {
+        req.flash("notice", "Unexpected error during password update.");
+        return res.redirect("/account/update");
+    }
+}
+
+module.exports = {
+    buildLogin,
+    buildRegister,
+    registerAccount,
+    accountLogin,
+    buildAccountManagement,
+    logout,
+    buildAccountUpdate,
+    updateAccountInfo,
+    updatePassword,
+};

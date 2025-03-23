@@ -1,2 +1,17 @@
-<h1>You're logged in</h1>
+<h1>Account Management</h1>
+
+<% if (account_name) { %>
+    <h2>Welcome <%= account_name %></h2>
+<% } %>
+
+<!-- Link para actualizar la cuenta -->
+<p>
+    <a href="/account/update-account/<%= account_id %>">Update Account Information</a>
+
+</p>
+
+<% if (account_type === "Employee" || account_type === "Admin") { %>
+    <h3>Inventory Management</h3>
+    <p><a href="/inv">Access Inventory Management</a></p>
+<% } %>
 

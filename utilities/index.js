@@ -265,14 +265,6 @@ Util.checkJWTToken = (req, res, next) => {
     }
 };
 
-/* **************************************
-* Build the Management Ac count View
-* ************************************ */
-Util.buildManagementAccountView = function () {
-    return `
-        <h1>You are login</h1>
-    `;
-};
 
 /* ****************************************
  *  Check Login
@@ -315,6 +307,32 @@ Util.buildClassificationList = async function (selectedClassificationId = null) 
     list += "</select>";
     return list;
 };
+
+Util.checkAdminOrEmployee = (req, res, next) => {
+    if (!req.cookies.jwt) {
+        req.flash("notice", "You must be logged in to access this page.");
+        return res.redirect("/account/login");
+    }
+
+    jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET, (err, accountData) => {
+        if (err) {
+            req.flash("notice", "Invalid session. Please log in again.");
+            res.clearCookie("jwt");
+            return res.redirect("/account/login");
+        }
+
+        // Verifica si el usuario tiene el rol adecuado
+        if (accountData.account_type === "Employee" || accountData.account_type === "Admin") {
+            res.locals.accountData = accountData; // Guarda datos en locals
+            res.locals.loggedin = true;
+            next();
+        } else {
+            req.flash("notice", "You do not have permission to access this page.");
+            return res.redirect("/account/login");
+        }
+    });
+};
+
 
 
 /* ****************************************

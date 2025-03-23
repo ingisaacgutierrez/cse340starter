@@ -4,10 +4,11 @@
   </span>
   <div id="tools">
     <% if (is_logged_in) { %>
-        <span>Welcome, <a href="/account" title="Go to Account Management"><%= account_name %></a>!</span>
+        <span>Welcome, <a href="/account" title="Go to Account Management"><%= account_name %></a> (<%= account_type %>)!</span>
         <a title="Log out" href="/account/logout">Log Out</a>
     <% } else { %>
         <a title="Click to log in" href="/account/login">My Account</a>
     <% } %>
   </div>
 </header>
+
