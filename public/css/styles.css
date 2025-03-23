@@ -720,6 +720,48 @@ p a:hover {
     text-align: center;
 }
 
+/**************************** Delete Form **********************************************/
+
+.delete-inventory-form form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 400px; /* Adjust as needed */
+  margin: 0 auto; /* Center the form */
+}
+
+.delete-inventory-form label {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.delete-inventory-form input[type="text"],
+.delete-inventory-form input[type="number"] {
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+.delete-inventory-form input[readonly] {
+  background-color: #f0f0f0; /* Light gray background for readonly fields */
+  cursor: not-allowed;
+}
+
+.delete-inventory-form button[type="submit"] {
+  background-color: #d9534f; /* Red for delete */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.delete-inventory-form button[type="submit"]:hover {
+  background-color: #c9302c; /* Darker red on hover */
+}
 
 /****************************** --------------------------------- Desktop styles ---------------------------------*******************************/
 @media (min-width: 1024px) {
@@ -960,6 +1002,27 @@ edit-inventory-form {
     .btn-update-password {
         font-size: 1.1rem;
         padding: 12px;
+    }
+ /*************************************************** Delete Form *****************************************/
+    .delete-inventory-form form {
+      max-width: 600px; /* Wider form on desktop */
+      padding: 30px;
+    }
+  
+    .delete-inventory-form label {
+      margin-top: 15px;
+      font-size: 1.1em;
+    }
+  
+    .delete-inventory-form input[type="text"],
+    .delete-inventory-form input[type="number"] {
+      padding: 10px;
+      font-size: 1em;
+    }
+  
+    .delete-inventory-form button[type="submit"] {
+      padding: 12px 20px;
+      font-size: 1.1em;
     }
 
 }
