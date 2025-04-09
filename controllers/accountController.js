@@ -1,5 +1,6 @@
 const utilities = require("../utilities/index");
 const accountModel = require("../models/account-model");
+const reviewModel = require("../models/review-model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -150,19 +151,37 @@ async function accountLogin(req, res) {
  * *************************************** */
 async function buildAccountManagement(req, res, next) {
     try {
-        let nav = await utilities.getNav();
-        res.render("account/account-management", {
-            title: "Account Management",
-            nav,
-            errors: null,
-            account_id: req.session.account_id,
-            account_name: req.session.account_name,
-            account_type: req.session.account_type,
-        });
+      let nav = await utilities.getNav();
+      const account_id = req.session.account_id;
+      const reviews = await reviewModel.getReviewsByAccountId(account_id);
+  
+      res.render("account/account-management", {
+        title: "Account Management",
+        nav,
+        errors: null,
+        account_id,
+        account_name: req.session.account_name,
+        account_type: req.session.account_type,
+        reviews,
+      });
     } catch (error) {
-        next(error);
+      console.error("Error al cargar las reseñas del usuario:", error);
+      req.flash("notice", "Error al cargar tus reseñas.");
+  
+      const nav = await utilities.getNav(); // asegúrate de definir esto también en el catch
+  
+      res.render("account/account-management", {
+        title: "Account Management",
+        nav,
+        errors: null,
+        account_id: req.session.account_id,
+        account_name: req.session.account_name,
+        account_type: req.session.account_type,
+        reviews: [],
+      });
     }
-}
+  }
+  
 
 /* ****************************************
  * Logout

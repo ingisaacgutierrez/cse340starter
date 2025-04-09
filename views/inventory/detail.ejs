@@ -1,5 +1,52 @@
 <main id="vehicle-detail-page">
 
-    <%- vehicleDetail %> 
+  <!-- Vehicle Detail -->
+  <%- vehicleDetail %> 
+
+  <!-- Reviews Section -->
+  <section class="reviews-section">
+    <h2>Reviews</h2>
+
+    <% if (reviews && reviews.length > 0) { %>
+      <ul class="review-list">
+        <% reviews.forEach(function(review) { %>
+          <li class="review-item">
+            <p><strong><%= review.screen_name %></strong> wrote:</p>
+            <p><%= review.review_text %></p>
+            <p class="review-date"><%= new Date(review.review_date).toLocaleDateString() %></p>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>There are no reviews for this vehicle yet.</p>
+    <% } %>
+
+    <!-- Show form or link depending on session status -->
+    <% if (!loggedin) { %>
+      <p>To write a review, please <a href="/account/login">log in</a>.</p>
+    <% } else { %>
+      <form class="review-form" action="/review/add" method="POST">
+        <div>
+          <label for="screen_name">User:</label>
+          <input type="text" id="screen_name" name="screen_name" value="<%= screen_name %>" readonly>
+        </div>
+
+        <div>
+          <label for="review_text">Your review:</label>
+          <textarea id="review_text" name="review_text" required rows="4" placeholder="Write your review here..."></textarea>
+        </div>
+
+        <!-- Hidden fields -->
+        <input type="hidden" name="inv_id" value="<%= itemId %>">
+        <input type="hidden" name="account_id" value="<%= accountId %>">
+
+        <button type="submit">Submit Review</button>
+      </form>
+    <% } %>
+  </section>
 
 </main>
+
+
+
+  

@@ -22,6 +22,7 @@ const static = require("./routes/static");
 const inventoryRoute = require("./routes/inventoryRoute");
 const accountRoute = require("./routes/accountRoute");
 const errorRoute = require("./routes/errorRoute");
+const reviewRoute = require("./routes/reviewRoute");
 
 const app = express();
 
@@ -31,6 +32,10 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./layouts/layout"); // not at views root
+/* ***********************
+ * Silence Favicon
+ *************************/
+app.get("/favicon.ico", (req, res) => res.status(204).end());
 
 /* ***********************
  * Middleware
@@ -89,6 +94,9 @@ app.use("/account", accountRoute);
 
 // Inventory Route
 app.use("/inv", inventoryRoute);
+
+//Review Route
+app.use("/review", reviewRoute);
 
 // Error Route
 app.use("/error", errorRoute);
