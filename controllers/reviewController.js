@@ -3,24 +3,24 @@ const utilities = require("../utilities/index");
 const reviewModel = require("../models/review-model");
 
 /* ****************************************
- *  Agregar nueva reseña
+ *  Add new review
  * *************************************** */
 async function addReview(req, res) {
   const { review_text, inv_id, account_id } = req.body;
 
   try {
     await reviewModel.addReview(review_text, inv_id, account_id);
-    req.flash("notice", "Reseña agregada exitosamente.");
+    req.flash("notice", "Review added successfully.");
     res.redirect("/inv/detail/" + inv_id);
   } catch (error) {
-    console.error("Error al agregar reseña:", error);
-    req.flash("notice", "Error al agregar reseña.");
+    console.error("Error adding review:", error);
+    req.flash("notice", "Error adding review.");
     res.redirect("/inv/detail/" + inv_id);
   }
 }
 
 /* ****************************************
- *  Mostrar vista para editar reseña
+ *  Show view to edit review
  * *************************************** */
 async function editReviewView(req, res) {
   const review_id = req.params.review_id;
@@ -28,60 +28,60 @@ async function editReviewView(req, res) {
   try {
     const review = await reviewModel.getReviewById(review_id);
     if (!review) {
-      req.flash("notice", "Reseña no encontrada.");
+      req.flash("notice", "Review not found.");
       return res.redirect("/account/");
     }
 
     if (review.account_id != res.locals.accountData.account_id) {
-      req.flash("notice", "No tienes permiso para editar esta reseña.");
+      req.flash("notice", "You do not have permission to edit this review.");
       return res.redirect("/account/");
     }
 
     const nav = await utilities.getNav();
 
     res.render("account/edit-review", {
-      title: "Editar Reseña",
+      title: "Edit Review",
       nav,
       review,
       errors: null,
     });
   } catch (error) {
-    console.error("Error al cargar vista de edición:", error);
-    req.flash("notice", "Error al cargar la vista de edición.");
+    console.error("Error loading edit view:", error);
+    req.flash("notice", "Error loading the edit view.");
     res.redirect("/account/");
   }
 }
 
 /* ****************************************
- *  Actualizar reseña
+ *  Update review
  * *************************************** */
 async function updateReview(req, res) {
   const { review_id, review_text } = req.body;
 
   try {
     await reviewModel.updateReview(review_text, review_id);
-    req.flash("notice", "Reseña actualizada.");
+    req.flash("notice", "Review updated.");
     res.redirect("/account/");
   } catch (error) {
-    console.error("Error al actualizar reseña:", error);
-    req.flash("notice", "Error al actualizar reseña.");
+    console.error("Error updating the review:", error);
+    req.flash("notice", "Error updating the review");
     res.redirect("/account/");
   }
 }
 
 /* ****************************************
- *  Eliminar reseña
+ *  Delete review
  * *************************************** */
 async function deleteReview(req, res) {
   const { review_id } = req.body;
 
   try {
     await reviewModel.deleteReview(review_id);
-    req.flash("notice", "Reseña eliminada.");
+    req.flash("notice", "Review deleted.");
     res.redirect("/account/");
   } catch (error) {
-    console.error("Error al eliminar reseña:", error);
-    req.flash("notice", "Error al eliminar reseña.");
+    console.error("Error deleting review:", error);
+    req.flash("notice", "Error deleting review.");
     res.redirect("/account/");
   }
 }
@@ -92,4 +92,5 @@ module.exports = {
   updateReview,
   deleteReview,
 };
+
 
