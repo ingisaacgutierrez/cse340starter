@@ -1224,8 +1224,9 @@ edit-inventory-form {
   
     .delete-inventory-form button[type="submit"] {
       padding: 12px 20px;
-      font-size: 1.1em;
-      .user-reviews {
+      font-size: 1.1em;}
+    
+    .user-reviews {
         max-width: 800px;
         margin: 0 auto;
       }
@@ -1279,5 +1280,3 @@ edit-inventory-form {
 
 
     }
-
-}
